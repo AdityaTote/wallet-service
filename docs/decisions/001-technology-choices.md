@@ -15,17 +15,17 @@ The system needs to be a wallet microservice that handles financial transactions
 
 ## Decision
 
-| Component | Choice |
-|---|---|---|
-| Language | Go 1.25 |
-| Database | PostgreSQL |
-| DB driver | pgx/v5 via pgxpool |
-| Query layer | sqlc (code generation) |
-| HTTP router | chi/v5 |
-| Auth | JWT (golang-jwt, HS256) |
-| Config | koanf (.env + env vars) |
-| Logger | zerolog |
-| Migrations | golang-migrate |
+| Component   | Choice                  |
+| ----------- | ----------------------- |
+| Language    | Go 1.25                 |
+| Database    | PostgreSQL              |
+| DB driver   | pgx/v5 via pgxpool      |
+| Query layer | sqlc (code generation)  |
+| HTTP router | chi/v5                  |
+| Auth        | JWT (golang-jwt, HS256) |
+| Config      | koanf (.env + env vars) |
+| Logger      | zerolog                 |
+| Migrations  | golang-migrate          |
 
 ## Rationale
 
@@ -36,6 +36,7 @@ The system needs to be a wallet microservice that handles financial transactions
 **pgx over database/sql**: pgx is a native PostgreSQL driver that avoids the overhead of the `database/sql` abstraction. `pgxpool` provides built-in connection pooling with PostgreSQL-specific features (prepared statements, binary protocol).
 
 **sqlc over ORM**: sqlc generates Go code from SQL. This means:
+
 - SQL is visible and auditable (no hidden query generation)
 - Compile-time type safety (no runtime SQL construction)
 - No N+1 query problems
