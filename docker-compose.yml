@@ -1,0 +1,61 @@
+services:
+  migrate:
+    image: migrate/migrate
+    container_name: migrate
+    volumes:
+      - ./migrations:/migrations
+    env_file:
+      - .env
+    command:
+      [
+        "-path",
+        "/migrations",
+        "-database",
+        "postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@${POSTGRES_HOST:-postgres}:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-postgres}?sslmode=disable",
+        "up",
+      ]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+
+  seed-service:
+    build:
+      context: .
+      dockerfile: docker/seed.dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - migrate
+
+  wallet-service:
+    build:
+      context: .
+      dockerfile: docker/wallet.dockerfile
+    container_name: wallet-service
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - seed-service
+      
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_vol:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pg_vol:
