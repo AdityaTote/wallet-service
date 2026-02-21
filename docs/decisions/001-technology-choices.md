@@ -15,17 +15,17 @@ The system needs to be a wallet microservice that handles financial transactions
 
 ## Decision
 
-| Component | Choice | Alternatives considered |
+| Component | Choice |
 |---|---|---|
-| Language | Go 1.25 | Node.js, Java, Rust |
-| Database | PostgreSQL | MySQL, SQLite, MongoDB |
-| DB driver | pgx/v5 via pgxpool | database/sql + lib/pq |
-| Query layer | sqlc (code generation) | GORM, raw SQL strings, sqlx |
-| HTTP router | chi/v5 | gin, gorilla/mux, net/http |
-| Auth | JWT (golang-jwt, HS256) | Session-based, OAuth |
-| Config | koanf (.env + env vars) | viper, envconfig |
-| Logger | zerolog | zap, logrus, slog |
-| Migrations | golang-migrate | goose, atlas |
+| Language | Go 1.25 |
+| Database | PostgreSQL |
+| DB driver | pgx/v5 via pgxpool |
+| Query layer | sqlc (code generation) |
+| HTTP router | chi/v5 |
+| Auth | JWT (golang-jwt, HS256) |
+| Config | koanf (.env + env vars) |
+| Logger | zerolog |
+| Migrations | golang-migrate |
 
 ## Rationale
 

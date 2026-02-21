@@ -45,7 +45,6 @@ curl -s http://localhost:8080/api/wallet/balance \
 | Docker deployment | [docs/deployment/docker.md](docs/deployment/docker.md) |
 | Operations & observability | [docs/operations/observability.md](docs/operations/observability.md) |
 | Security & auth model | [docs/security/auth-model.md](docs/security/auth-model.md) |
-| Troubleshooting | [docs/troubleshooting/common-issues.md](docs/troubleshooting/common-issues.md) |
 
 ### Decision Records
 
